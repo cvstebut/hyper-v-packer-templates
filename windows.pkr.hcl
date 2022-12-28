@@ -1,6 +1,6 @@
 source "hyperv-iso" "windows" {
   boot_command                     = ["<tab><enter>", "aaaaaaaaaaaa<enter>", "aaaaaaaaaaaa<enter>", "aaaaaa<wait1ms>aaaaaa<enter>"]
-  boot_wait                        = "65s"
+  boot_wait                        = "2s"
   communicator                     = "winrm"
   cpus                             = var.cpu
   disk_size                        = var.disk_size
@@ -8,10 +8,10 @@ source "hyperv-iso" "windows" {
   enable_secure_boot               = true
   enable_virtualization_extensions = var.windows_disable_virtualization ? false : true
   # Requires https://github.com/hashicorp/packer-plugin-hyperv/pull/56 to be merged, or checkout camjjack:enable-tpm and use.
-  # enable_tpm                       = true
+  enable_tpm                       = true
   generation                       = 2
   guest_additions_mode             = "disable"
-  iso_checksum                     = "${var.iso_checksum_type}:${var.windows_iso_checksum}"
+  iso_checksum                     = "none"
   iso_url                          = var.windows_iso_url
   memory                           = var.ram_size
   output_directory                 = var.windows_output_directory
@@ -49,20 +49,6 @@ source "virtualbox-iso" "windows" {
 
 build {
   sources = ["source.hyperv-iso.windows", "source.virtualbox-iso.windows"]
-
-  provisioner "powershell" {
-    elevated_password = var.password
-    elevated_user     = var.username
-    environment_vars  = ["SSH_USERNAME=${var.username}"]
-    scripts           = ["${path.root}/windows/scripts/install-chocolatey.ps1", "${path.root}/windows/scripts/enable-hyperv.ps1", "${path.root}/windows/scripts/compile-dotnet-assemblies.ps1", "${path.root}/windows/scripts/defrag.ps1", "${path.root}/windows/scripts/scrub.ps1"]
-  }
-
-  provisioner "powershell" {
-    elevated_password = var.password
-    elevated_user     = var.username
-    only              = ["virtualbox-iso"]
-    scripts           = ["${path.root}/windows/scripts/install-virtualbox-guest-additions.ps1"]
-  }
 
   provisioner "powershell" {
     elevated_password = var.password

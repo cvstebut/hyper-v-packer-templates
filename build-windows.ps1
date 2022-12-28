@@ -69,7 +69,7 @@ if ($disableVirtualization) {
 
 if ($verbose -or $debug) {
     $env:PACKER_LOG = 1
-    $env:PACKER_LOG_PATH = packer-log.txt
+    $env:PACKER_LOG_PATH ='packer-log.txt'
 }
 else {
     $env:PACKER_LOG = 0

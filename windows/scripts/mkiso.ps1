@@ -19,9 +19,8 @@ param(
       [switch]$Force,
       [string]$Title = (Get-Date).ToString("yyyyMMdd-HHmmss.ffff"))
 
-      ($cp = new-object System.CodeDom.Compiler.CompilerParameters).CompilerOptions = '/unsafe'
     if (!('ISOFile' -as [type])) {
-      Add-Type -CompilerParameters $cp -TypeDefinition @"
+      Add-Type -CompilerOptions '/unsafe' -TypeDefinition @"
 public class ISOFile
 {
   public unsafe static void Create(string Path, object Stream, int BlockSize, int TotalBlocks)

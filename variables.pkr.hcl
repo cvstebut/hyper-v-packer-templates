@@ -15,7 +15,7 @@ variable "disk_size" {
 
 variable "hyperv_switchname" {
   type    = string
-  default = "Default External"
+  default = "internalLAN"
 }
 variable "hyperv_vlan_id" {
   type    = number

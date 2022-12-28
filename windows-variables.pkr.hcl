@@ -5,7 +5,7 @@ variable "windows_iso_checksum" {
 
 variable "windows_iso_url" {
   type    = string
-  default = "https://software-download.microsoft.com/download/sg/22000.194.210913-1444.co_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+  default = "M:/dsl/iso/windows11/en-us_windows_11_business_editions_version_22h2_updated_dec_2022_x64_dvd_af9b9aaf.iso"
 }
 
 variable "windows_output_directory" {
